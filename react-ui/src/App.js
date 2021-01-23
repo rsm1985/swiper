@@ -1,43 +1,60 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
+// import logo from './logo.svg';
+// import './App.css';
 import Chart from './chart'
-
+import Img from './est.jpg';
+const Image = () => {
+    return(
+        <div>
+          <img style={{width: "100%", height: "300px", objectFit: "cover", opacity: ".2"}} src={Img} alt=""/>
+        </div>)
+}
 function App() {
-  const [message, setMessage] = useState(null);
-  const [isFetching, setIsFetching] = useState(false);
-  const [url, setUrl] = useState('/api');
-
-  const fetchData = useCallback(() => {
-    fetch(url)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`status ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(json => {
-        setMessage(json.message);
-        setIsFetching(false);
-      }).catch(e => {
-        setMessage(`API call failed: ${e}`);
-        setIsFetching(false);
-      })
-  }, [url]);
-
-  useEffect(() => {
-    setIsFetching(true);
-    fetchData();
-  }, [fetchData]);
-
+    const [activeSlide, setActiveSlide] = useState(0);
+  // const [message, setMessage] = useState(null);
+  // const [isFetching, setIsFetching] = useState(false);
+  // const [url, setUrl] = useState('/api');
+  //
+  // const fetchData = useCallback(() => {
+  //   fetch(url)
+  //     .then(response => {
+  //       if (!response.ok) {
+  //         throw new Error(`status ${response.status}`);
+  //       }
+  //       return response.json();
+  //     })
+  //     .then(json => {
+  //       setMessage(json.message);
+  //       setIsFetching(false);
+  //     }).catch(e => {
+  //       setMessage(`API call failed: ${e}`);
+  //       setIsFetching(false);
+  //     })
+  // }, [url]);
+  //
+  // useEffect(() => {
+  //   setIsFetching(true);
+  //   fetchData();
+  // }, [fetchData]);
+  //   console.log(activeSlide)
   return (
-      <div style={{maxWidth: 800, width: "100%"}}><Chart spaceBetween={20}
+      <div style={{maxWidth: 800, width: "100%"}}>
+        <Chart spaceBetween={20}
                slidesPerView={1.05}
                navigation
-               pagination={{ clickable: true }}
-               onSlideChange={() => console.log(111)}
-               onSwiper={(swiper) => console.log(swiper)}
-               /></div>
+                onSlideChange={(swiper) => {
+                  // console.log(swiper)
+                    setActiveSlide(swiper.activeIndex)
+                }}
+               pages
+               activeSlide={activeSlide}
+        >
+          <>
+          <div><Image/></div>
+          <div><Image/></div>
+        </>
+        </Chart>
+</div>
   );
 
 }

@@ -3,26 +3,20 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, Scrollbar } from 'swiper'
 // Import Swiper styles
 import './swiper-bundle.min.css';
-import Img from './est.jpg';
+import Pages from './pagination'
 SwiperCore.use([Navigation, Pagination, Scrollbar])
-const Image = () => {
-    return(
-        <div>
-            <img style={{width: "100%", height: "300px", objectFit: "cover", opacity: ".2"}} src={Img} alt=""/>
-        </div>)
-}
-const Chart = ({...props}) => {
+
+const Chart = ({pages,activeSlide,children, ...props}) => {
     return (
-        <div >
+        <>
             <Swiper
                 {...props}
             >
-                <SwiperSlide ><Image/></SwiperSlide>
-                <SwiperSlide ><Image/></SwiperSlide>
-                <SwiperSlide ><Image/></SwiperSlide>
-                <SwiperSlide ><Image/></SwiperSlide>
+                {children.props.children.map((item)=><SwiperSlide >{item}</SwiperSlide>)}
+
             </Swiper>
-        </div>
+        {pages ? <Pages length={children.props.children.length} active={activeSlide}/> : null}
+        </>
     )
 }
 
