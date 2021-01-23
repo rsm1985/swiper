@@ -31,12 +31,13 @@ function App() {
   }, [fetchData]);
 
   return (
-      <div style={{width: 800}}><Chart spaceBetween={20}
+      <div style={{maxWidth: 800, width: "100%"}}><Chart spaceBetween={20}
                slidesPerView={1.05}
-
+               navigation
+               pagination={{ clickable: true }}
                onSlideChange={() => console.log(111)}
                onSwiper={(swiper) => console.log(swiper)}
-               data="111"/></div>
+               /></div>
   );
 
 }
