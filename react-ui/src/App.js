@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Chart from './chart'
 
 function App() {
   const [message, setMessage] = useState(null);
@@ -30,9 +31,12 @@ function App() {
   }, [fetchData]);
 
   return (
-    <div className="App">
-      222
-    </div>
+      <div style={{width: 800}}><Chart spaceBetween={20}
+               slidesPerView={1.05}
+
+               onSlideChange={() => console.log(111)}
+               onSwiper={(swiper) => console.log(swiper)}
+               data="111"/></div>
   );
 
 }
