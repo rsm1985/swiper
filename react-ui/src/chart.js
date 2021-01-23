@@ -12,7 +12,7 @@ const Chart = ({pages,activeSlide,children, ...props}) => {
             <Swiper
                 {...props}
             >
-                {children.props.children.map((item)=><SwiperSlide >{item}</SwiperSlide>)}
+                {children.props.children.map((item, index)=><SwiperSlide key={`${index}x`}>{item}</SwiperSlide>)}
 
             </Swiper>
         {pages ? <Pages length={children.props.children.length} active={activeSlide}/> : null}
