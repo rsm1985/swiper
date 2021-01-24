@@ -6,7 +6,7 @@ import './swiper-bundle.min.css';
 import Pages from './pagination'
 SwiperCore.use([Navigation, Pagination, Scrollbar])
 
-const Chart = ({pages,activeSlide,children, ...props}) => {
+const Chart = ({pages,activeSlide, children, ...props}) => {
     return (
         <>
             <Swiper

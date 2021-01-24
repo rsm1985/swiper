@@ -4,32 +4,88 @@ import React, {useCallback, useEffect, useState} from 'react';
 import Chart from './chart'
 import Pages from './pagination'
 import Img from './est.jpg';
+import Img1 from './tallin1.jpg';
+import Img2 from './tallin2.jpg';
+import Img3 from './tallin3.jpg';
 
-const Image = () => {
+const Image = ({img}) => {
     return (
         <div>
-            <img style={{width: "100%", height: "300px", objectFit: "cover", opacity: ".2"}} src={Img} alt=""/>
+            <img style={{width: "100%", height: "300px", objectFit: "cover", opacity: ".2"}} src={img} alt=""/>
         </div>)
 }
 
-const data = [
+
+const tarifs = [
     {
-        id: 7346,
-        img: Img
-    }, {
-        id: 7347,
-        img: Img
-    }, {
-        id: 7348,
-        img: Img
-    }, {
-        id: 7349,
-img: Img
+        id: 1,
+        name: "tarif 1",
+        img: Img,
+        freeConditions: [],
+        included: [
+            {
+                id: 7346,
+                img: Img1
+            }, {
+                id: 7347,
+                img: Img1
+            }, {
+                id: 7348,
+                img: Img1
+            }, {
+                id: 7349,
+                img: Img1
+            }
+        ]
+    },
+    {
+        id: 2,
+        name: "tarif 2",
+        img: Img,
+        freeConditions: [],
+        included: [
+            {
+                id: 6346,
+                img: Img2
+            }, {
+                id: 6347,
+                img: Img2
+            }, {
+                id: 6348,
+                img: Img2
+            }, {
+                id: 67349,
+                img: Img2
+            }
+        ]
+    },
+    {
+        id: 3,
+        name: "tarif 3",
+        img: Img,
+        freeConditions: [],
+        included: [
+            {
+                id: 2346,
+                img: Img3
+            }, {
+                id: 2347,
+                img: Img3
+            }, {
+                id: 7248,
+                img: Img3
+            }, {
+                id: 72349,
+                img: Img3
+            }
+        ]
     }
 ]
 
 function App() {
     const [activeSlide, setActiveSlide] = useState(0);
+    const [includedActiveSlide, setIncludedActiveSlide] = useState(0);
+    console.log("includedActiveSlide", includedActiveSlide)
     // const [message, setMessage] = useState(null);
     // const [isFetching, setIsFetching] = useState(false);
     // const [url, setUrl] = useState('/api');
@@ -61,8 +117,9 @@ function App() {
             <Chart spaceBetween={20}
                    slidesPerView={1}
                    navigation
-                   onSlideChange={(swiper) => setActiveSlide(swiper.activeIndex)}
-                   pages
+                   onSlideChange={(swiper) => {setActiveSlide(swiper.activeIndex);
+                   setIncludedActiveSlide(0)
+                   }}
                    activeSlide={activeSlide}
                    breakpoints={{
                        // when window width is >= value
@@ -75,10 +132,20 @@ function App() {
             >
                 <div
                 >
-                    {data.map((item) => <Image key={item.id}/>)}
+                    {tarifs.map((item) => <Image key={item.id} img={item.img}/>)}
                 </div>
             </Chart>
-            {/*<Pages length={2} active={activeSlide}/>*/}
+            <div>В тариф входят</div>
+
+            <Chart spaceBetween={20}
+                   slidesPerView={3.2}
+            >
+                <div
+                >
+                    {tarifs[activeSlide].included.map((item) => <Image key={item.id} img={item.img}/>)}
+                </div>
+            </Chart>
+            <Pages length={tarifs.length} active={activeSlide}/>
         </div>
     );
 }
