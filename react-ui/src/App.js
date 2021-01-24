@@ -1,6 +1,7 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState, useRef} from 'react';
 // import logo from './logo.svg';
 // import './App.css';
+import {Swiper, SwiperSlide} from 'swiper/react';
 import Chart from './chart'
 import Pages from './pagination'
 import Img from './est.jpg';
@@ -81,11 +82,11 @@ const tarifs = [
         ]
     }
 ]
-
-function App() {
+let controlledSwiper = null;
+const App = () => {
     const [activeSlide, setActiveSlide] = useState(0);
-    const [includedActiveSlide, setIncludedActiveSlide] = useState(0);
-    console.log("includedActiveSlide", includedActiveSlide)
+    // const controlledSwiper = useRef()
+    // console.log("controlledSwiper", controlledSwiper)
     // const [message, setMessage] = useState(null);
     // const [isFetching, setIsFetching] = useState(false);
     // const [url, setUrl] = useState('/api');
@@ -118,7 +119,7 @@ function App() {
                    slidesPerView={1}
                    navigation
                    onSlideChange={(swiper) => {setActiveSlide(swiper.activeIndex);
-                   setIncludedActiveSlide(0)
+                       controlledSwiper.slideTo(0)
                    }}
                    activeSlide={activeSlide}
                    breakpoints={{
@@ -136,13 +137,16 @@ function App() {
                 </div>
             </Chart>
             <div>В тариф входят</div>
-
-            <Chart spaceBetween={20}
-                   slidesPerView={3.2}
+            <Chart ref={controlledSwiper}
+                spaceBetween={20}
+                slidesPerView={3.2}
+                onSwiper={(swiper) => {controlledSwiper  = swiper}}
             >
-                <div
-                >
-                    {tarifs[activeSlide].included.map((item) => <Image key={item.id} img={item.img}/>)}
+                <div>
+                {tarifs[activeSlide].included.map((item) =>
+                    <SwiperSlide key={item.id}>
+                        <Image key={item.id} img={item.img}/>
+                    </SwiperSlide>)}
                 </div>
             </Chart>
             <Pages length={tarifs.length} active={activeSlide}/>
